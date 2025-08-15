@@ -20,15 +20,15 @@ class GoogleAuthUiClient(
     private val auth = FirebaseAuth.getInstance()
 
     suspend fun sign_in(): IntentSender? {
-        Log.d("GoogleAuthUiClient", "Starting sign_in()")
+
         val result = try {
-            Log.d("GoogleAuthUiClient", "Building sign-in request...")
+
             val request = buildSignInRequest()
             oneTapClient.beginSignIn(request).await().also {
-                Log.d("GoogleAuthUiClient", "Sign-in request successful")
+
             }
         } catch (e: Exception) {
-            Log.e("GoogleAuthUiClient", "Error in sign_in(): ${e.message}", e)
+
             if (e is CancellationException) throw e
             null
         }
@@ -43,9 +43,9 @@ class GoogleAuthUiClient(
 
         val googleCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
         return try {
-            Log.d("GoogleAuthUiClient", "Signing in with Firebase...")
+
             val user = auth.signInWithCredential(googleCredential).await().user
-            Log.d("GoogleAuthUiClient", "Firebase sign-in successful: ${user?.uid}")
+
             SignInResult(
                 data = user?.run {
                     UserData(
@@ -57,7 +57,7 @@ class GoogleAuthUiClient(
                 errorMessage = null
             )
         } catch (e: Exception) {
-            Log.e("GoogleAuthUiClient", "Error in getSignInResultFromIntent(): ${e.message}", e)
+
             if (e is CancellationException) throw e
             SignInResult(
                 data = null,
@@ -66,21 +66,21 @@ class GoogleAuthUiClient(
         }
     }
 
-    suspend fun signOut() {
-        Log.d("GoogleAuthUiClient", "Signing out...")
+   suspend fun signOut() {
+
         try {
-            oneTapClient.signOut().await()
+         oneTapClient.signOut().await()
             auth.signOut()
-            Log.d("GoogleAuthUiClient", "Sign out successful")
+
         } catch (e: Exception) {
-            Log.e("GoogleAuthUiClient", "Error in signOut(): ${e.message}", e)
+
             if (e is CancellationException) throw e
         }
     }
 
     fun getSignInUser(): UserData? {
         val currentUser = auth.currentUser
-        Log.d("GoogleAuthUiClient", "Current user: ${currentUser?.uid}")
+
         return currentUser?.run {
             UserData(
                 userid = uid,
@@ -91,7 +91,7 @@ class GoogleAuthUiClient(
     }
 
     private fun buildSignInRequest(): BeginSignInRequest {
-        Log.d("GoogleAuthUiClient", "Building Google Sign-In request object")
+
         return BeginSignInRequest.Builder()
             .setGoogleIdTokenRequestOptions(
                 GoogleIdTokenRequestOptions.builder()

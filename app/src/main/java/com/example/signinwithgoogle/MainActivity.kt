@@ -112,11 +112,9 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable("profile") {
-                            Log.d("DEBUG", "Profile screen loaded")
                             ProfileScreen(
                                 userData = _googleAuthUiClient.getSignInUser(),
                                 onSignOut = {
-                                    Log.d("DEBUG", "Sign-out clicked")
                                     lifecycleScope.launch {
                                         _googleAuthUiClient.signOut()
                                         Toast.makeText(
@@ -124,7 +122,7 @@ class MainActivity : ComponentActivity() {
                                             "Signed out",
                                             Toast.LENGTH_LONG
                                         ).show()
-                                        Log.d("DEBUG", "Navigating back after sign-out")
+
                                         navController.popBackStack()
                                     }
                                 }
