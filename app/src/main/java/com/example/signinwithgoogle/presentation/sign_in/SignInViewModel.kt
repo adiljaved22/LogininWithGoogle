@@ -12,6 +12,17 @@ class SignInViewModel: ViewModel() {
     val state = _state.asStateFlow()
 
     fun onSignInResult(result: SignInResult) {
+        android.util.Log.d("DEBUG", "onSignInResult called with: $result")
+        _state.update { it.copy(
+            isSignInSuccessful = result.data != null,
+            signInError = result.errorMessage
+        ) }
+    }
+
+
+    fun resetState() {
+        android.util.Log.d("DEBUG", "resetState called, state reset to default")
+
         _state.update { SignInState() }
     }
 }

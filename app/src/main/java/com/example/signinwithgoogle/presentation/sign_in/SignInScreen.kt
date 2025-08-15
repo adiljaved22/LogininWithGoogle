@@ -12,9 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-
+import android.util.Log
 @Composable
 fun SignInScreen(
+
     state: SignInState,
     onSignInClick: () -> Unit
 ) {
@@ -30,9 +31,19 @@ fun SignInScreen(
         contentAlignment = Alignment.Center
     )
     {
-        Button(onClick = onSignInClick)
-        {
-            Text("SignIn")
-        }
+
+
+
+ Button(onClick = {
+
+     Log.d("DEBUG", " Sign in button clicked")
+
+     onSignInClick()
+
+ }) {
+     Text("Sign in with Google")
+ }
+
+
     }
 }
